@@ -28,3 +28,29 @@ class Task {
         return Number(this.#cost);
     }
 }
+
+function IncomeTask() { // TODO: Добавить наследование от Task
+    if (!new.target) throw new Error('Cannot be invoked without "new"')
+
+    this.makeDone() = function(budget) {
+        budget.income += this.cost;
+    }
+
+    this.makeUnDone() = function(budget) {
+        budget.income -= this.cost;
+    }
+}
+// Object.setPrototypeOf(IncomeTask, Task);
+
+function ExpenseTask() { // TODO: Добавить наследование от Task
+    if (!new.target) throw new Error('Cannot be invoked without "new"')
+
+    this.makeDone() = function(budget) {
+        budget.expense += this.cost;
+    }
+
+    this.makeUnDone() = function(budget) {
+        budget.expense -= this.cost;
+    }
+}
+// Object.setPrototypeOf(ExpenseTask, Task);
