@@ -60,3 +60,39 @@ class ExpenseTask extends Task {
         budget.expense -= this.cost;
     }
 }
+
+class TasksController {
+    #tasks = [];
+
+    constructor () {
+        // Конструктор
+    }
+
+    addTasks(...tasks) {
+        tasks.push(...tasks);
+    }
+    
+    deleteTask(task) {
+        const indexOfTask = _footbalPlayers.indexOf(task);
+
+        if (indexOfTask !== -1) {
+            tasks.splice(indexOfTask, 1);
+        }  
+    }
+
+    getTasks() {
+        return [...tasks]; 
+    }
+
+    getTasksSortedBy(filterType) {
+        const filteredTasks = [];
+
+
+    }
+
+    getFilteredTasks() {
+        
+    }
+
+    // Должен иметь механизм работы с уже сделанными задачами (BudgetController)
+}
