@@ -1,56 +1,62 @@
 console.clear();
 // #############
 
-class Task {
-    #id;
-    #description;
-    #cost;
+function Task(description, cost) {
 
-    constructor (description, cost) {
-        if (new.target) throw new Error('Cannot be invoked with "new"')
+    if (new.target) throw new Error('Forbidden to create an instance of this class');
+    if (!new.target) throw new Error('Forbidden to create an instance of this class');
 
-        this.#id = function() {
-            return Date.now().toString(36) + Math.random().toString(36).substr(2);
-        };
-        this.#description = description;
-        this.#cost = Number(cost);
+    const generateID = function() {
+        return Date.now().toString(36) + Math.random().toString(36).substr(2);
     }
 
-    get id() {
-        return this.#id;
-    }
+    const _id = generateID(); // Каждый раз создаёт новый id
+    const _description = description;
+    const _cost = Number(cost);
 
-    get description() {
-        return this.#description;
-    }
+    Object.defineProperty(this, 'id', {
+        get() {
+            return _id;
+        }
+    });
 
-    get cost() {
-        return Number(this.#cost);
-    }
+    Object.defineProperty(this, 'description', {
+        get() {
+            return _description;
+        }
+    });
+
+    Object.defineProperty(this, 'cost', {
+        get() {
+            return _cost;
+        }
+    });
 }
 
-function IncomeTask() { // TODO: Добавить наследование от Task
-    if (!new.target) throw new Error('Cannot be invoked without "new"')
+class IncomeTask extends Task {
+    constructor (description, cost) {
+        super(description, cost);
+    }
 
-    this.makeDone() = function(budget) {
+    makeDone(budget) {
         budget.income += this.cost;
     }
 
-    this.makeUnDone() = function(budget) {
+    makeUnDone(budget) {
         budget.income -= this.cost;
     }
 }
-// Object.setPrototypeOf(IncomeTask, Task);
 
-function ExpenseTask() { // TODO: Добавить наследование от Task
-    if (!new.target) throw new Error('Cannot be invoked without "new"')
+class ExpenseTask extends Task {
+    constructor () {
 
-    this.makeDone() = function(budget) {
+    }
+
+    makeDone(budget) {
         budget.expense += this.cost;
     }
 
-    this.makeUnDone() = function(budget) {
+    makeUnDone(budget) {
         budget.expense -= this.cost;
     }
 }
-// Object.setPrototypeOf(ExpenseTask, Task);
