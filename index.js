@@ -47,6 +47,8 @@ class IncomeTask extends Task {
     }
 }
 
+Object.setPrototypeOf(IncomeTask.prototype, Task.prototype);
+
 class ExpenseTask extends Task {
     constructor(description, cost) {
         super(description, cost);
@@ -59,4 +61,99 @@ class ExpenseTask extends Task {
     makeUnDone(budget) {
         budget.expense -= this.cost;
     }
+}
+
+Object.setPrototypeOf(ExpenseTask.prototype, Task.prototype);
+
+class TasksController {
+    #tasks = [];
+    // #completedTasks = [];
+
+    addTasks(...tasks) {
+        this.#tasks.push(...tasks);
+    }
+
+    deleteTask(task) {
+        const indexOfTask = this.#tasks.indexOf(task);
+
+        if (indexOfTask !== -1) {
+            this.#tasks.splice(indexOfTask, 1);
+        }
+    }
+
+    getTasks() {
+        return [...this.#tasks];
+    }
+
+    getTasksSortedBy(sortType) {
+        switch (sortType) {
+            case 'description':
+                return [...this.#tasks].sort(function (a, b) {
+                    const name1 = a.description;
+                    const name2 = b.description;
+
+                    const name1InLowerCase = name1.toLowerCase();
+                    const name2InLowerCase = name2.toLowerCase();
+
+                    if (name1InLowerCase > name2InLowerCase) return 1;
+                    if (name1InLowerCase < name2InLowerCase) return -1;
+
+                    if (name1 > name2) return 1;
+                    if (name1 < name2) return -1;
+
+                    return 0;
+                });
+
+            case 'status':
+
+
+            case 'cost':
+                return [...this.#tasks].sort(function (a, b) {
+                    const costA = a.cost;
+                    const costB = b.cost;
+
+                    if (costA > costB) return 1;
+                    if (costA < costB) return -1;
+
+                    return 0;
+                });
+        }
+    }
+
+
+    getFilteredTasks(filter) {
+        let filteredTasks = this.#tasks;
+
+        for (const filterType in filter) {
+            switch (filterType) {
+                case 'isIncome':
+                    if (filter[filterType] === true) {
+                        filteredTasks = filteredTasks.filter(function (element) {
+                            return element.constructor.name === 'IncomeTask';
+                        })
+                    } else {
+                        filteredTasks = filteredTasks.filter(function (element) {
+                            return element.constructor.name === 'ExpenseTask';
+                        })
+                    }
+
+                    continue;
+
+                case 'description':
+                    filteredTasks = filteredTasks.filter(function (element) {
+                        return element.description.includes(filter[filterType]);
+                    })
+
+                    continue;
+
+                case 'isCompleted':    
+
+                continue;
+            }
+        }
+
+        return [...filteredTasks];
+    }
+
+    // Должен иметь механизм работы с уже сделанными задачами (BudgetController)
 }
