@@ -67,7 +67,7 @@ Object.setPrototypeOf(ExpenseTask.prototype, Task.prototype);
 
 class TasksController {
     #tasks = [];
-    // #completedTasks = [];
+    #completedTasks = [];
 
     addTasks(...tasks) {
         this.#tasks.push(...tasks);
@@ -105,7 +105,8 @@ class TasksController {
                 });
 
             case 'status':
-
+                const notCompletedTasks = this.#tasks.filter(item => !this.#completedTasks.includes(item)).concat(this.#completedTasks.filter(item => !this.#tasks.includes(item)));
+                return [...this.#completedTasks].concat(notCompletedTasks);
 
             case 'cost':
                 return [...this.#tasks].sort(function (a, b) {
@@ -130,11 +131,11 @@ class TasksController {
                     if (filter[filterType] === true) {
                         filteredTasks = filteredTasks.filter(function (element) {
                             return element.constructor.name === 'IncomeTask';
-                        })
+                        });
                     } else {
                         filteredTasks = filteredTasks.filter(function (element) {
                             return element.constructor.name === 'ExpenseTask';
-                        })
+                        });
                     }
 
                     continue;
@@ -142,13 +143,12 @@ class TasksController {
                 case 'description':
                     filteredTasks = filteredTasks.filter(function (element) {
                         return element.description.includes(filter[filterType]);
-                    })
+                    });
 
                     continue;
 
-                case 'isCompleted':    
-
-                continue;
+                case 'isCompleted':
+                    return [...this.#completedTasks];
             }
         }
 
