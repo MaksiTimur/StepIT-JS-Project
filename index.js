@@ -157,3 +157,32 @@ class TasksController {
 
     // Должен иметь механизм работы с уже сделанными задачами (BudgetController)
 }
+
+class BudgetController {
+    #taskController;
+    #budget;
+
+    constructor(balance) {
+        this.#budget = {
+            balance,
+            income: 0,
+            expenses: 0
+        }
+
+        if (balance === undefined) this.#budget.balance = 0;
+
+        this.#taskController = new TasksController();
+    }
+
+    get balance() {
+        return this.#budget.balance;
+    }
+
+    get income() {
+        return this.#budget.income;
+    }
+
+    get expenses() {
+        return this.#budget.expenses;
+    }
+}
