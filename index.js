@@ -55,11 +55,11 @@ class ExpenseTask extends Task {
     }
 
     calculateDone(budget) {
-        budget.expense += this.cost;
+        budget.expenses += this.cost;
     }
 
     calculateUnDone(budget) {
-        budget.expense -= this.cost;
+        budget.expenses -= this.cost;
     }
 }
 
@@ -88,6 +88,10 @@ class TasksController {
 
     getTasks() {
         return [...this.#tasks];
+    }
+
+    getCompletedTasks() {
+        return [...this.#completedTasks];
     }
 
     getTasksSortedBy(sortType) {
@@ -189,5 +193,59 @@ class BudgetController {
 
     get expenses() {
         return this.#budget.expenses;
+    }
+
+    calculateBalance() {
+        return this.balance + this.income - this.expenses;
+    }
+
+    getTasks() {
+        return this.#taskController.getTasks();
+    }
+
+    addTasks(...tasks) {
+        return this.#taskController.addTasks(...tasks);
+    }
+
+    deleteTask(task) {
+        if (this.getTasks().indexOf(task) === -1) {
+            console.log(`Task ${task.id} isn't recognized`);
+            return;
+        }
+
+        if (this.#taskController.getCompletedTasks().indexOf(task) !== -1) {
+            task.calculateUnDone(this.#budget);
+            console.log(1);
+        }
+
+        this.#taskController.deleteTask(task);
+    }
+
+    doneTask(task) {
+        if (this.getTasks().indexOf(task) === -1) {
+            console.log(`Task ${task.id} isn't recognized`);
+            return;
+        }
+
+        if (this.#taskController.getCompletedTasks().indexOf(task) !== -1) {
+            console.log("Task is already done");
+            return;
+        }
+
+        task.calculateDone(this.#budget);
+    }
+
+    unDoneTask(task) {
+        if (this.getTasks().indexOf(task) === -1) {
+            console.log(`Task ${task.id} isn't recognized`);
+            return;
+        }
+        
+        if (this.#taskController.getCompletedTasks().indexOf(task) !== -1) {
+            console.log("Task isn't done before");
+            return;
+        }
+
+        task.calculateUnDone(this.#budget);
     }
 }
