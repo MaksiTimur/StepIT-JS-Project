@@ -75,9 +75,14 @@ class TasksController {
 
     deleteTask(task) {
         const indexOfTask = this.#tasks.indexOf(task);
+        const indexOfCompletedTask = this.#completedTasks.indexOf(task);
 
         if (indexOfTask !== -1) {
             this.#tasks.splice(indexOfTask, 1);
+        }
+
+        if (indexOfCompletedTask !== -1) {
+            this.#completedTasks.splice(indexOfCompletedTask, 1);
         }
     }
 
