@@ -38,11 +38,11 @@ class IncomeTask extends Task {
         super(description, cost);
     }
 
-    makeDone(budget) {
+    calculateDone(budget) {
         budget.income += this.cost;
     }
 
-    makeUnDone(budget) {
+    calculateUnDone(budget) {
         budget.income -= this.cost;
     }
 }
@@ -54,11 +54,11 @@ class ExpenseTask extends Task {
         super(description, cost);
     }
 
-    makeDone(budget) {
+    calculateDone(budget) {
         budget.expense += this.cost;
     }
 
-    makeUnDone(budget) {
+    calculateUnDone(budget) {
         budget.expense -= this.cost;
     }
 }
