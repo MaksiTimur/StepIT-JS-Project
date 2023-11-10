@@ -73,6 +73,18 @@ class TasksController {
         this.#tasks.push(...tasks);
     }
 
+    completeTasks(...tasks) {
+        this.#completedTasks.push(...tasks);
+    }
+
+    unCompleteTask(task) {
+        const indexOfCompletedTask = this.#completedTasks.indexOf(task);
+
+        if (indexOfCompletedTask !== -1) {
+            this.#completedTasks.splice(indexOfCompletedTask, 1);
+        }
+    }
+
     deleteTask(task) {
         const indexOfTask = this.#tasks.indexOf(task);
         const indexOfCompletedTask = this.#completedTasks.indexOf(task);
@@ -163,8 +175,6 @@ class TasksController {
 
         return [...filteredTasks];
     }
-
-    // Должен иметь механизм работы с уже сделанными задачами (BudgetController)
 }
 
 class BudgetController {
@@ -215,7 +225,6 @@ class BudgetController {
 
         if (this.#taskController.getCompletedTasks().indexOf(task) !== -1) {
             task.calculateUnDone(this.#budget);
-            console.log(1);
         }
 
         this.#taskController.deleteTask(task);
@@ -233,6 +242,7 @@ class BudgetController {
         }
 
         task.calculateDone(this.#budget);
+        this.#taskController.completeTasks(task);
     }
 
     unDoneTask(task) {
@@ -241,11 +251,12 @@ class BudgetController {
             return;
         }
         
-        if (this.#taskController.getCompletedTasks().indexOf(task) !== -1) {
+        if (this.#taskController.getCompletedTasks().indexOf(task) === -1) {
             console.log("Task isn't done before");
             return;
         }
 
         task.calculateUnDone(this.#budget);
+        this.#taskController.unCompleteTask(task);
     }
 }
