@@ -138,9 +138,11 @@ class TasksController {
         let filteredTasks = this.#tasks;
 
         for (const filterType in filter) {
+            const filterValue = filter[filterType];
+
             switch (filterType) {
                 case 'isIncome':
-                    if (filter[filterType] === true) {
+                    if (filterValue) {
                         filteredTasks = filteredTasks.filter(function (element) {
                             return element.constructor.name === 'IncomeTask';
                         });
@@ -154,7 +156,7 @@ class TasksController {
 
                 case 'description':
                     filteredTasks = filteredTasks.filter(function (element) {
-                        return element.description.includes(filter[filterType]);
+                        return element.description.includes(filterValue);
                     });
 
                     continue;
