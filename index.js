@@ -126,8 +126,8 @@ class TasksController {
                     const costA = a.cost;
                     const costB = b.cost;
 
-                    if (costA > costB) return 1;
-                    if (costA < costB) return -1;
+                    if (costA > costB) return -1;
+                    if (costA < costB) return 1;
 
                     return 0;
                 });
