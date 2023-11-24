@@ -34,10 +34,6 @@ function Task(description, cost) {
 }
 
 class IncomeTask extends Task {
-    constructor(description, cost) {
-        super(description, cost);
-    }
-
     calculateDone(budget) {
         budget.income += this.cost;
     }
@@ -50,10 +46,6 @@ class IncomeTask extends Task {
 Object.setPrototypeOf(IncomeTask.prototype, Task.prototype);
 
 class ExpenseTask extends Task {
-    constructor(description, cost) {
-        super(description, cost);
-    }
-
     calculateDone(budget) {
         budget.expenses += this.cost;
     }
