@@ -162,7 +162,12 @@ class TasksController {
                     continue;
 
                 case 'isCompleted':
-                    return [...this.#completedTasks];
+                    if (filter[filterType]) {
+                        return [...this.#completedTasks];
+                    }
+
+                    const notCompletedTasks = this.#tasks.filter(item => !this.#completedTasks.includes(item)).concat(this.#completedTasks.filter(item => !this.#tasks.includes(item)));
+                    return [...notCompletedTasks];
             }
         }
 
