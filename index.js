@@ -8,7 +8,7 @@ function Task(description, cost) {
     }
     if (cost < 0) throw new Error('Cost cannot be less than zero');
 
-    const _id = Date.now().toString(36) + Math.random().toString(36).substr(2);
+    const _id = "id" + Math.random().toString(16).slice(2);
     const _description = description;
     const _cost = Number(cost);
 
