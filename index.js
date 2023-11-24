@@ -211,6 +211,14 @@ class BudgetController {
         return this.#taskController.addTasks(...tasks);
     }
 
+    getTasksSortedBy(sortType) {
+        return this.#taskController.getTasksSortedBy(sortType);
+    }
+
+    getFilteredTasks(filter) {
+        return this.#taskController.getFilteredTasks(filter);
+    }
+
     deleteTask(task) {
         if (this.getTasks().indexOf(task) === -1) {
             console.log(`Task ${task.id} isn't recognized`);
