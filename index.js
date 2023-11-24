@@ -62,7 +62,13 @@ class TasksController {
     #completedTasks = [];
 
     addTasks(...tasks) {
-        this.#tasks.push(...tasks);
+        for (const iterator of [...tasks]) {
+            if (!this.#tasks.includes(iterator)) {
+                this.#tasks.push(iterator);  
+            } else {
+                console.log(`Task ${iterator.id} already added! Skipped`);
+            }
+        }
     }
 
     completeTasks(...tasks) {
