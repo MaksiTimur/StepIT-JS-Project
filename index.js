@@ -134,7 +134,6 @@ class TasksController {
         }
     }
 
-
     getFilteredTasks(filter) {
         let filteredTasks = this.#tasks;
 
@@ -170,19 +169,15 @@ class TasksController {
 }
 
 class BudgetController {
-    #taskController;
+    #taskController = this.#taskController = new TasksController();;
     #budget;
 
-    constructor(balance) {
+    constructor(balance = 0) {
         this.#budget = {
             balance,
             income: 0,
             expenses: 0
         }
-
-        if (balance === undefined) this.#budget.balance = 0;
-
-        this.#taskController = new TasksController();
     }
 
     get balance() {
