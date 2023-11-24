@@ -176,7 +176,7 @@ class TasksController {
 }
 
 class BudgetController {
-    #taskController = this.#taskController = new TasksController();;
+    #taskController = new TasksController();
     #budget;
 
     constructor(balance = 0) {
